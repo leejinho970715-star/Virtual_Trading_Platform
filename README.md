@@ -24,3 +24,7 @@ Node.js 22 이상에서 `npm start` 후 http://localhost:4173 에 접속합니�
 
 `assets/parrot-yellow.png`, `assets/parrot-red.png`, `assets/glass-portfolio.png`, `assets/glass-market.png`는 내장 image_gen으로 생성한 투명 배경 3D 렌더 이미지입니다. 실시간 3D 모델 파일은 아닙니다. 이모지나 평면 아이콘 라이브러리는 사용하지 않습니다. 로고와 종목 표식 등에 동일 에셋을 재사용합니다. 프롬프트는 `ASSETS.md`에 기록했습니다.
 
+
+## 수익 결과 코인
+
+다음 날 계산 완료 시 총 포트폴리오 수익률이 양수이면 노란 앵무새 코인, 음수이면 빨간 앵무새 코인을 결과 창과 수익률 카드에 표시합니다. 0% 또는 미투자는 중립 결과로 표시합니다. 코인 종류는 시각적 피드백이며 별도 자산이나 통화가 아닙니다.
