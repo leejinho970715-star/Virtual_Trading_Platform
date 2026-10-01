@@ -47,3 +47,10 @@ dialog{background:linear-gradient(140deg,#284b43df,#10282eea);backdrop-filter:bl
 @media(max-width:1100px){.topbar{width:calc(100% - 56px);padding:0 22px}}
 @media(max-width:800px){.topbar{width:calc(100% - 40px);margin-top:16px;padding:18px 16px 0;border-radius:12px}}
 @media(max-width:520px){.topbar{padding:16px 12px 0}.topbar nav{gap:18px}}
+/* User-provided main visual, preserved at its complete aspect ratio. */
+.hero-banner{margin-top:24px;border-radius:16px;overflow:hidden;background:linear-gradient(125deg,#284b3f80,#0c221bc9);box-shadow:0 18px 50px #0005;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.hero-banner-link{display:block;overflow:hidden;line-height:0}.hero-banner-link img{display:block;width:100%;height:auto;aspect-ratio:1983/793;object-fit:contain;transition:filter .25s}
+.hero-banner-link:hover img{filter:brightness(1.05)}.hero-banner-link:focus-visible{outline-offset:-4px}
+.hero-banner-caption{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 22px;font-size:12px;color:#b4c9c1}.hero-banner-caption a{color:#c7f6db;font-weight:600;white-space:nowrap;padding:5px 0}.hero-banner-caption a:hover{color:#fff}
+@media(max-width:800px){.hero-banner{margin-top:20px;border-radius:12px}.hero-banner-caption{padding:12px 16px;font-size:11px;gap:10px}}
+@media(max-width:520px){.hero-banner{margin-top:16px}.hero-banner-caption{align-items:flex-start;flex-direction:column;gap:5px;padding:12px 14px}.hero-banner-caption a{font-size:13px}}
