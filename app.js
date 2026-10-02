@@ -98,7 +98,7 @@ function showDayResult(){
  $('resultTitle').textContent=positive?'좋은 선택이었어요!':negative?'아쉬운 하루였어요.':'새로운 하루가 시작됐어요.';
  $('resultDescription').textContent=positive?'투자한 종목의 총 수익률이 플러스예요.':negative?'투자한 종목의 총 수익률이 마이너스예요.':m.invested?'총 수익률에 변동이 없어요.':'아직 투자한 종목이 없어요. 첫 투자를 시작해 보세요.';
  $('resultRate').textContent=pct(m.returns);$('resultRate').className=positive?'positive':negative?'negative':'';
- renderResultStories();$('resultBalance').textContent=fmt(state.appliedCoins)+' 코인';$('resultDialog').classList.toggle('loss-result',negative);$('resultDialog').showModal();playSound(positive?'buy':negative?'error':'tap');
+ renderResultStories();$('resultBalance').textContent=fmt(state.appliedCoins)+' 코인';$('resultDialog').classList.toggle('loss-result',negative);$('resultDialog').showModal();$('resultTitle').focus({preventScroll:true});$('resultDialog').scrollTop=0;playSound(positive?'buy':negative?'error':'tap');
 }
 $('closeResult').onclick=()=>{$('resultDialog').close();$('nextDay').focus();};
 const assetObserver=new MutationObserver(()=>decorateAssets());for(const id of ['watchlist','holdings','profileButton','submitOrder'])assetObserver.observe($(id),{childList:true});
