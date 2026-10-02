@@ -37,6 +37,17 @@ button,input,select,textarea{font-family:var(--font)}
 dialog{background:linear-gradient(140deg,#284b43df,#10282eea);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px)}
 #resultDialog{background:radial-gradient(ellipse at 50% 20%,#365a4355,transparent 65%),#122129de;backdrop-filter:blur(25px)}
 #resultDialog.loss-result{background:radial-gradient(ellipse at 50% 20%,#8c3f4345,transparent 65%),#1c202ade}
+#resultDialog{width:min(560px,92vw);max-height:90dvh;overflow-y:auto;overscroll-behavior:contain}
+#resultDialog .result-coin{width:130px;height:130px;margin-top:10px}
+#resultReasons{text-align:left;margin:20px 0 12px}
+#resultReasons h3{font-size:18px;line-height:1.5;margin:0 0 6px}
+#resultReasons .reason-context{font-size:12px;line-height:1.6;color:var(--muted);margin:0 0 14px}
+.result-reason{padding:18px;margin-top:12px;border:1px solid #cde5e315;border-radius:14px;background:linear-gradient(135deg,#d6efe90b,#d6efe903)}
+.reason-label{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:14px}
+.reason-label span{white-space:nowrap}
+#resultReasons h4{font-size:16px;line-height:1.6;margin:12px 0 8px;font-weight:600}
+#resultReasons p{font-size:14px;line-height:1.85;margin:0;color:#b8cbd0;word-break:keep-all;overflow-wrap:anywhere}
+#resultReasons .reason-lesson{margin-top:14px;padding-top:12px;border-top:1px solid #cde5e310;color:#d7e9e3}
 .glass-sculpture{width:132px;height:119px;right:16px;top:27px;transform:rotate(-12deg)}
 .glass-sculpture .red-coin{width:92px;height:92px;right:0;top:0}
 .glass-sculpture .yellow-coin{width:102px;height:102px;left:-2px;top:21px}

@@ -63,13 +63,42 @@ function decorateAssets(){
 function renderOutcomeCoin(){
  const m=metrics(state),card=document.querySelector('.return-card');let coin=card.querySelector('.outcome-coin');if(!coin){coin=document.createElement('img');coin.className='outcome-coin';coin.width=90;coin.height=90;card.append(coin);}coin.hidden=m.returns===0;coin.src=`assets/parrot-${m.returns<0?'red':'yellow'}.png`;coin.alt=m.returns<0?'손실 상태의 빨간 앵무새 코인':'수익 상태의 노란 앵무새 코인';card.classList.toggle('has-outcome',m.returns!==0);
 }
+// Editorial explanations for the deliberately scripted simulation, not market news.
+const resultStories={
+ KMS001:{title:'나를 돌보는 힘이 성장의 기반이 되었어요',body:'자신의 감정과 필요를 이해하고, 충분히 쉬고, 스스로를 존중하는 데 시간을 썼어요. 그렇게 회복한 여유는 더 나은 판단과 꾸준한 실행으로 이어졌습니다. 이번 시나리오에서는 나를 돌보는 투자가 다른 선택까지 지탱하는 기반이 되어 상승했어요.',lesson:'나를 사랑하는 일은 성장의 보상이 아니라, 성장을 시작하는 바탕이에요.'},
+ HB002:{title:'좋은 계획보다 지속할 수 있는 습관이 필요했어요',body:'운동 프로그램과 건강 관리 도구에 투자했지만, 내 생활 리듬에 맞지 않아 꾸준히 활용하지 못했어요. 지출은 늘었는데 기대한 변화가 충분히 쌓이지 않아 이번 결과는 하락했습니다.',lesson:'건강의 가치가 줄어든 것은 아니에요. 나에게 맞는 작은 습관부터 이어가 보세요.'},
+ TA003:{title:'잠깐의 전환이 일상의 회복으로 이어지지 못했어요',body:'새로운 곳으로 떠나면 답을 찾을 수 있을 것 같았어요. 하지만 빽빽한 일정과 예상보다 큰 지출로 돌아온 뒤에도 피로와 부담이 남았습니다. 이번 시나리오에서는 여행의 즐거움보다 준비와 회복에 드는 비용이 커져 하락했어요.',lesson:'좋은 여행은 멀리 가는 것보다, 지금 나에게 필요한 쉼을 찾는 데서 시작돼요.'},
+ FH004:{title:'가족을 위한 마음에 내 여유가 빠져 있었어요',body:'가족에게 도움이 되고 싶어 시간과 비용을 많이 들였지만, 정작 서로 무엇이 필요한지는 충분히 나누지 못했어요. 혼자 책임지려는 부담이 쌓이면서 기대했던 만족으로 이어지지 않아 이번 결과는 하락했습니다.',lesson:'가족을 아끼는 마음과 나를 돌보는 마음은 함께 가야 오래 지속될 수 있어요.'},
+ GE005:{title:'모두에게 맞추려다 나의 기준을 놓쳤어요',body:'좋은 관계를 만들려고 모임과 부탁에 늘 응했지만, 내 시간과 감정은 뒤로 밀렸어요. 관계에 쓴 에너지에 비해 만족과 신뢰가 충분히 쌓이지 않아 이번 결과는 하락했습니다.',lesson:'관계의 수보다 서로를 존중하는 깊이가 중요해요. 편안하게 지킬 수 있는 경계도 필요해요.'},
+ SE006:{title:'배운 양이 실제로 쓰는 힘으로 이어지지 못했어요',body:'AI가 답을 빠르게 찾아주는 상황에서도 정답을 외우고 강의를 많이 듣는 데만 집중했어요. 배운 내용을 직접 적용하거나 스스로 질문하는 연습이 부족해, 들인 시간에 비해 문제 해결력이 충분히 자라지 않았습니다. 이번 시나리오에서는 그 차이가 하락으로 반영됐어요.',lesson:'공부가 무의미한 것은 아니에요. 암기에서 한 걸음 더 나아가 질문하고, 검증하고, 직접 써보는 배움이 필요해요.'}
+};
+function renderResultStories(){
+ const container=$('resultReasons');container.replaceChildren();
+ const positions=state.stocks.filter(s=>state.holdings[s.ticker]?.shares>0);
+ container.hidden=!positions.length;
+ if(!positions.length)return;
+ const heading=document.createElement('h3');heading.textContent='이번 결과, 왜 이렇게 나왔을까요?';container.append(heading);
+ const note=document.createElement('p');note.className='reason-context';note.textContent='자기 돌봄의 의미를 전하는 가상 시나리오 해설입니다.';container.append(note);
+ for(const s of positions){
+  const holding=state.holdings[s.ticker],rate=holding.avgPrice>0?(s.price/holding.avgPrice-1)*100:0;
+  const story=resultStories[s.ticker],card=document.createElement('article');card.className='result-reason';
+  const label=document.createElement('div');label.className='reason-label';
+  const name=document.createElement('strong');name.textContent=s.name;
+  const change=document.createElement('span');change.className=rate<0?'negative':'positive';change.textContent=pct(rate);label.append(name,change);
+  const title=document.createElement('h4');title.textContent=rate===0?'아직 투자 결과에 변동이 없어요.':story.title;
+  const body=document.createElement('p');body.textContent=rate===0?'다음 날로 이동하면 이 종목의 결과와 해설을 확인할 수 있어요.':story.body;
+  card.append(label,title,body);
+  if(rate!==0){const lesson=document.createElement('p');lesson.className='reason-lesson';lesson.textContent=story.lesson;card.append(lesson);}
+  container.append(card);
+ }
+}
 function showDayResult(){
  const m=metrics(state),positive=m.returns>0,negative=m.returns<0;
  $('resultCoin').hidden=!positive&&!negative;$('resultCoin').src=`assets/parrot-${negative?'red':'yellow'}.png`;$('resultCoin').alt=negative?'빨간 앵무새 코인':'노란 앵무새 코인';
  $('resultTitle').textContent=positive?'좋은 선택이었어요!':negative?'아쉬운 하루였어요.':'새로운 하루가 시작됐어요.';
  $('resultDescription').textContent=positive?'투자한 종목의 총 수익률이 플러스예요.':negative?'투자한 종목의 총 수익률이 마이너스예요.':m.invested?'총 수익률에 변동이 없어요.':'아직 투자한 종목이 없어요. 첫 투자를 시작해 보세요.';
  $('resultRate').textContent=pct(m.returns);$('resultRate').className=positive?'positive':negative?'negative':'';
- $('resultBalance').textContent=fmt(state.appliedCoins)+' 코인';$('resultDialog').classList.toggle('loss-result',negative);$('resultDialog').showModal();playSound(positive?'buy':negative?'error':'tap');
+ renderResultStories();$('resultBalance').textContent=fmt(state.appliedCoins)+' 코인';$('resultDialog').classList.toggle('loss-result',negative);$('resultDialog').showModal();playSound(positive?'buy':negative?'error':'tap');
 }
 $('closeResult').onclick=()=>{$('resultDialog').close();$('nextDay').focus();};
 const assetObserver=new MutationObserver(()=>decorateAssets());for(const id of ['watchlist','holdings','profileButton','submitOrder'])assetObserver.observe($(id),{childList:true});
