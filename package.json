@@ -1,1 +1,1 @@
-{"name":"kkeolmusae-exchange","version":"1.0.0","private":true,"type":"module","scripts":{"start":"node server.mjs","test":"node --test engine.test.mjs","build":"node build.mjs"}}
+{"name":"kkeolmusae-exchange","version":"1.0.0","private":true,"type":"module","scripts":{"start":"node server.mjs","test":"node --test engine.test.mjs terminal/market.test.mjs","build":"node build.mjs"}}
