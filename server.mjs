@@ -4,6 +4,7 @@ import path from 'node:path';
 const root = process.cwd();
 const publicFiles = new Set(['index.html', 'style.css', 'app.js', 'engine.js', 'terminal/index.html', 'terminal/terminal.css', 'terminal/terminal.js', 'terminal/market.js']);
 const mime = { html: 'text/html; charset=utf-8', css: 'text/css; charset=utf-8', js: 'text/javascript; charset=utf-8', png: 'image/png', jpg: 'image/jpeg', woff2: 'font/woff2' };
+publicFiles.add('display-market.js');
 for (const file of ['index.html', 'tv.css', 'tv.js']) publicFiles.add('live-chart-tv/' + file);
 http.createServer(async (req, res) => {
   try {

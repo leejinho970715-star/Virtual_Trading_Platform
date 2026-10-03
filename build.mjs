@@ -1,6 +1,6 @@
 import {mkdir,copyFile,cp,readFile,writeFile} from 'node:fs/promises';
 await mkdir('dist',{recursive:true});
-for(const file of ['index.html','style.css','app.js','engine.js'])await copyFile(file,`dist/${file}`);
+for(const file of ['index.html','style.css','app.js','engine.js','display-market.js'])await copyFile(file,`dist/${file}`);
 await cp('assets','dist/assets',{recursive:true});
 await cp('terminal','dist/terminal',{recursive:true});
 await cp('live-chart-tv','dist/live-chart-tv',{recursive:true});

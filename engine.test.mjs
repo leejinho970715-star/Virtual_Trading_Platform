@@ -22,3 +22,15 @@ test('legacy gains are corrected and over-limit portfolios require recovery',()=
  let s=order(fresh(),'HB002','buy',10);s.stocks[1].price*=3;s=nextDay(s,()=>0);assert.ok(metrics(s).returns<0);
  s.holdings.TA003={shares:1,avgPrice:211500};s.holdings.FH004={shares:1,avgPrice:211000};assert.throws(()=>nextDay(s),/2개/);assert.throws(()=>order(s,'HB002','buy',1),/2개/);s=order(s,'FH004','sell',1);assert.doesNotThrow(()=>nextDay(s));
 });
+import {createDisplayMarket,tickDisplayMarket} from './display-market.js';
+test('every decorative quote can cross zero without changing account settlement',()=>{
+ const account=order(fresh(),'HB002','buy',10),before=structuredClone(account);
+ let quotes=createDisplayMarket(account.stocks,()=>0);
+ assert.ok(quotes.every(q=>q.change<0));
+ for(let i=0;i<5;i++)quotes=tickDisplayMarket(quotes,()=>1);
+ assert.ok(quotes.every(q=>q.change>0));
+ for(let i=0;i<5;i++)quotes=tickDisplayMarket(quotes,()=>0);
+ assert.ok(quotes.every(q=>q.change<0&&q.price>0));
+ assert.deepEqual(account,before);
+ assert.ok(metrics(nextDay(account,()=>1)).returns<0);
+});
