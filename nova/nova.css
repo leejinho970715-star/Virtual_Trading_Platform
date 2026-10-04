@@ -3,3 +3,28 @@
 .korea-chart{height:auto!important;min-height:540px}.korea-chart #stock-price{font-size:28px}.korea-chart #stock-state{color:#9aa98f;font-size:12px}
 
 html,body,button,input,select,textarea,option{font-family:Pretendard,sans-serif}.asset-heading,.feature-strip>div{border-radius:10px}
+/* Keep native pickers, but reserve enough width and height for their text and arrow. */
+select{max-width:100%;min-height:44px;line-height:1.5;padding-right:32px}
+#stock-period{flex:0 0 auto;min-width:148px}
+.korea-chart .panel-title>div{min-width:0}
+#stock-state{line-height:1.6;overflow-wrap:anywhere}
+@media(max-width:700px){
+  .panel-title{flex-wrap:wrap}
+  #view-markets .panel-title{align-items:flex-start;flex-direction:column}
+  #view-markets .panel-title>label{display:flex;flex-direction:column;gap:8px;width:100%;font-size:12px}
+  .panel-title select,.korea-top select,form select{width:100%;max-width:100%;min-height:48px;font-size:16px;line-height:1.5;padding:11px 34px 11px 12px}
+  .korea-chart .panel-title{align-items:stretch;flex-direction:column;padding:14px}
+  .korea-chart .panel-title>div{width:100%}
+  #stock-period{min-width:0;flex:none;align-self:stretch}
+  .korea-top{min-width:0}
+  .korea-top select{min-width:0}
+  .asset-heading{flex-wrap:wrap}
+  .asset-price{flex-basis:100%;margin-left:0;text-align:left}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .stats b{overflow-wrap:anywhere}
+}
+@media(max-width:420px){
+  .feature-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .feature-strip>div:first-child{grid-column:1/-1;border-bottom:1px solid var(--line)}
+  .feature-strip>div:nth-child(2):before{display:none}
+}
