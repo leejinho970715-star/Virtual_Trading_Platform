@@ -12,7 +12,7 @@ export default async function handler(req,res){
  res.setHeader('Cache-Control','private, no-store, max-age=0');res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('X-Frame-Options','DENY');res.setHeader('Referrer-Policy','same-origin');res.setHeader('Vary','Cookie');
  try{
   const url=new URL(req.url,'http://localhost'),pathname=decodeURIComponent(url.pathname);
-  if(pathname==='/nova'){res.statusCode=308;res.setHeader('Location','/nova/');return res.end()}
+  if(pathname==='/nova'){res.statusCode=308;res.setHeader('Location','/nova/index.html');return res.end()}
   const resource=pathname.startsWith('/nova/')?pathname.slice(6):url.searchParams.get('resource')||'index.html';
   const route=resource||'index.html',{key,credentials}=await settings();
   const token=(req.headers.cookie||'').split(';').map(x=>x.trim()).find(x=>x.startsWith('nova_session='))?.slice(13);

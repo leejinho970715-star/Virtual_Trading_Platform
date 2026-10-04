@@ -5,6 +5,7 @@
   "outputDirectory": "dist",
   "functions": {"api/nova.js": {"includeFiles": ".nova-private/**", "maxDuration": 15}},
   "rewrites": [
+    {"source": "/nova/", "destination": "/api/nova?resource=index.html"},
     {"source": "/nova", "destination": "/api/nova?resource=index.html"},
     {"source": "/nova/:resource*", "destination": "/api/nova?resource=:resource*"}
   ]
