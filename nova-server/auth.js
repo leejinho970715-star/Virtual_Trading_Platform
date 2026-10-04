@@ -1,0 +1,6 @@
+import{createHmac,pbkdf2,timingSafeEqual,randomBytes}from'node:crypto';
+import{promisify}from'node:util';
+const derive=promisify(pbkdf2);
+export async function checkCredentials(username,password,config){if(typeof username!=='string'||typeof password!=='string'||username.length>80||password.length>256)return false;const actual=await derive(password,config.salt,config.iterations,32,'sha256'),expected=Buffer.from(config.hash,'hex');return timingSafeEqual(actual,expected)&&username===config.username}
+export function makeSession(key,now=Date.now()){const body=Buffer.from(JSON.stringify({expires:now+8*3600000,nonce:randomBytes(16).toString('hex')})).toString('base64url');return body+'.'+createHmac('sha256',key).update(body).digest('base64url')}
+export function checkSession(token,key,now=Date.now()){if(typeof token!=='string'||token.length>1000)return false;try{const[body,sig,...extra]=token.split('.');if(extra.length)return false;const actual=Buffer.from(sig||'','base64url'),expected=createHmac('sha256',key).update(body).digest();if(actual.length!==expected.length||!timingSafeEqual(actual,expected))return false;const payload=JSON.parse(Buffer.from(body,'base64url'));return Number.isFinite(payload.expires)&&payload.expires>now&&payload.expires<=now+8*3600000}catch{return false}}

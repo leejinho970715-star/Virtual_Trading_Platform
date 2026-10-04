@@ -6,3 +6,4 @@ original-app.js
 preview*.png
 .env
 .env.*
+.nova-private/
