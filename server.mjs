@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import novaHandler from './api/nova.js';
 const root = process.cwd();
-const publicFiles = new Set(['index.html', 'style.css', 'app.js', 'engine.js', 'terminal/index.html', 'terminal/terminal.css', 'terminal/terminal.js', 'terminal/market.js']);
+const publicFiles = new Set(['index.html', 'style.css', 'app.js', 'engine.js','outcome-effects.js', 'terminal/index.html', 'terminal/terminal.css', 'terminal/terminal.js', 'terminal/market.js']);
 const mime = { html: 'text/html; charset=utf-8', css: 'text/css; charset=utf-8', js: 'text/javascript; charset=utf-8', png: 'image/png', jpg: 'image/jpeg', woff2: 'font/woff2' };
 publicFiles.add('display-market.js');
 for (const file of ['index.html', 'tv.css', 'tv.js']) publicFiles.add('live-chart-tv/' + file);

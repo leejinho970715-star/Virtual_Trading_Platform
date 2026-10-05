@@ -1,3 +1,4 @@
+import {createOutcomeEffects} from './outcome-effects.js';
 import {createDisplayMarket,tickDisplayMarket} from './display-market.js';
 import {INITIAL,fresh,metrics,order,nextDay,canBuy,positionCount} from './engine.js';
 const $=id=>document.getElementById(id), fmt=n=>Number(n).toLocaleString('ko-KR',{maximumFractionDigits:0}), pct=n=>(n>=0?'+':'')+n.toFixed(2)+'%';
@@ -94,13 +95,14 @@ function renderResultStories(){
   container.append(card);
  }
 }
+const outcomeEffects=createOutcomeEffects($('resultDialog'));
 function showDayResult(){
  const m=metrics(state),positive=m.returns>0,negative=m.returns<0;
  $('resultCoin').hidden=!positive&&!negative;$('resultCoin').src=`assets/parrot-${negative?'red':'yellow'}.png`;$('resultCoin').alt=negative?'빨간 앵무새 코인':'노란 앵무새 코인';
  $('resultTitle').textContent=positive?'좋은 선택이었어요!':negative?'아쉬운 하루였어요.':'새로운 하루가 시작됐어요.';
  $('resultDescription').textContent=positive?'투자한 종목의 총 수익률이 플러스예요.':negative?'투자한 종목의 총 수익률이 마이너스예요.':m.invested?'총 수익률에 변동이 없어요.':'아직 투자한 종목이 없어요. 첫 투자를 시작해 보세요.';
  $('resultRate').textContent=pct(m.returns);$('resultRate').className=positive?'positive':negative?'negative':'';
- renderResultStories();$('resultBalance').textContent=fmt(state.appliedCoins)+' 코인';$('resultDialog').classList.toggle('loss-result',negative);$('resultDialog').showModal();$('resultTitle').focus({preventScroll:true});$('resultDialog').scrollTop=0;playSound(positive?'buy':negative?'error':'tap');
+ renderResultStories();$('resultBalance').textContent=fmt(state.appliedCoins)+' 코인';$('resultDialog').classList.toggle('loss-result',negative);$('resultDialog').showModal();$('resultTitle').focus({preventScroll:true});$('resultDialog').scrollTop=0;outcomeEffects.play(m.returns);playSound(positive?'buy':negative?'error':'tap');
 }
 $('closeResult').onclick=()=>{$('resultDialog').close();$('nextDay').focus();};
 const assetObserver=new MutationObserver(()=>decorateAssets());for(const id of ['watchlist','holdings','profileButton','submitOrder'])assetObserver.observe($(id),{childList:true});
