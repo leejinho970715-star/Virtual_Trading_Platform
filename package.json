@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node server.mjs",
-    "test": "node --test engine.test.mjs terminal/market.test.mjs nova/account.test.mjs nova-server/auth.test.mjs",
+    "test": "node --test engine.test.mjs terminal/market.test.mjs nova/account.test.mjs nova/simulation.test.mjs",
     "build": "node build.mjs"
   }
 }
